@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.eldersoss:elderssearchview:1.0.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/8c5f4b730dce0e420461f77ecb2ea808/jetified-elderssearchview-1.0.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/8c5f4b730dce0e420461f77ecb2ea808/jetified-elderssearchview-1.0.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/8c5f4b730dce0e420461f77ecb2ea808/jetified-elderssearchview-1.0.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.eldersoss/elderssearchview/1.0.0/1ef0a3e3713b7314c05dc305286e1a9d5e135353/elderssearchview-1.0.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.eldersoss/elderssearchview/1.0.0/1a6acf1392c918df3c705d61575c2c140ac58482/elderssearchview-1.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
