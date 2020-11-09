@@ -10,5 +10,5 @@ import javax.inject.Inject
  */
 class MainRepository @Inject constructor(private val apiHelper: ApiHelper) {
     suspend fun getArticle(param: HashMap<String, String>) = apiHelper.getArticle(param)
-    suspend fun getArticleSearch(param: HashMap<String, String>) = apiHelper.getArticle(param)
+    suspend fun getArticleSource(param: HashMap<String, String>) = apiHelper.getArticleSource(param)
 }

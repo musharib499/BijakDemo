@@ -9,10 +9,8 @@ import com.innobles.bijakmusharib.networkcall.module.NewsFeedResponse
  * I.S.T Pvt. Ltd
  * musharib.ali@innobles.com
  */
-const val COUNTRY_KEY = "country"
 const val CATEGORY_KEY = "category"
 const val API_KEY = "apiKey"
-const val SEARCH_KEY = "p"
 
 val categoryResponse: CategoryResponse = Gson().fromJson(
     "{\"category\":[{\"key\":\"business\",\"value\":\"Business\"},{\"key\":\"entertainment\",\"value\":\"Entertainment\"},{\"key\":\"general\",\"value\":\"General\"},{\"key\":\"health\",\"value\":\"Health\"},{\"key\":\"science\",\"value\":\"Science\"},{\"key\":\"sports\",\"value\":\"Sports\"},{\"key\":\"technology\",\"value\":\"Technology\"}]}",

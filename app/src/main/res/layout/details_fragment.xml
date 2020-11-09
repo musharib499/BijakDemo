@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.innobles.bijakmusharib.networkcall.module.NewsFeedResponse.Article" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardUseCompatPadding="true"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image"
+                android:layout_width="@dimen/zeroDp"
+                android:layout_height="wrap_content"
+                android:minWidth="300dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                imageFromUrl="@{item.urlToImage}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSource"
+                style="@style/TextAppearance.AppCompat.Large"
+                android:layout_width="@dimen/zeroDp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@id/right"
+                app:layout_constraintStart_toStartOf="@id/left"
+                app:layout_constraintTop_toBottomOf="@id/image"
+                android:text="@{item.source.name}"
+                tools:text="Title" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTime"
+                android:layout_width="@dimen/zeroDp"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@id/tvSource"
+                app:layout_constraintStart_toStartOf="@id/tvSource"
+                app:layout_constraintTop_toBottomOf="@id/tvSource"
+                android:text="@{item.publishedAt}"
+                tools:text="time" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTitle"
+                style="@style/TextAppearance.AppCompat.Body2"
+                android:layout_width="@dimen/zeroDp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="@id/tvTime"
+                app:layout_constraintStart_toStartOf="@id/tvTime"
+                app:layout_constraintTop_toBottomOf="@id/tvTime"
+                android:text="@{item.title}"
+                tools:text="Title" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDescription"
+                android:layout_width="@dimen/zeroDp"
+                style="@style/TextAppearance.AppCompat.Caption"
+                android:layout_height="wrap_content"
+
+                android:text="@{item.description}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/tvTitle"
+                app:layout_constraintStart_toStartOf="@+id/tvTitle"
+                app:layout_constraintTop_toBottomOf="@id/tvTitle"
+                tools:text="time" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/medium"
+                />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/medium"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

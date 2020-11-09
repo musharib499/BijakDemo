@@ -1,6 +1,7 @@
 package com.innobles.bijakmusharib.networkcall.api
 
 import com.innobles.bijakmusharib.networkcall.module.NewsFeedResponse
+import com.innobles.bijakmusharib.networkcall.module.SourcesResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.QueryMap
@@ -15,6 +16,6 @@ interface ApiService {
     @GET("top-headlines")
     suspend fun getArticle(@QueryMap param: HashMap<String, String>): Response<NewsFeedResponse>
 
-    @GET("everything")
-    suspend fun getArticleSearch(@QueryMap param: HashMap<String, String>): Response<NewsFeedResponse>
+    @GET("sources")
+    suspend fun getArticleSource(@QueryMap param: HashMap<String, String>): Response<SourcesResponse>
 }

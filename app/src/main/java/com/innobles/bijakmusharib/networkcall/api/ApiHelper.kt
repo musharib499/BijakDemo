@@ -1,6 +1,7 @@
 package com.innobles.bijakmusharib.networkcall.api
 
 import com.innobles.bijakmusharib.networkcall.module.NewsFeedResponse
+import com.innobles.bijakmusharib.networkcall.module.SourcesResponse
 import retrofit2.Response
 
 /**
@@ -10,5 +11,5 @@ import retrofit2.Response
  */
 interface ApiHelper {
     suspend fun getArticle(param: HashMap<String, String>): Response<NewsFeedResponse>
-    suspend fun getArticleSearch(param: HashMap<String, String>): Response<NewsFeedResponse>
+    suspend fun getArticleSource(param: HashMap<String, String>): Response<SourcesResponse>
 }

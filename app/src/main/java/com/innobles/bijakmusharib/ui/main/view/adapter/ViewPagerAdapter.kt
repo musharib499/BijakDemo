@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.innobles.bijakmusharib.ui.main.view.MainActivity
 import com.innobles.bijakmusharib.ui.main.view.MainFragment
-import com.innobles.bijakmusharib.ui.main.view.USFragment
+import com.innobles.bijakmusharib.ui.main.view.SourceFragment
 
 /**
  * Created by Musharib Ali on 8/11/20.
@@ -16,7 +16,7 @@ class ViewPagerAdapter(fragment: MainActivity) : FragmentStateAdapter(fragment) 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> MainFragment.newInstance()
-            else -> USFragment.newInstance()
+            else -> SourceFragment.newInstance()
         }
 
     }

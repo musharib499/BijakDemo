@@ -1,21 +1,24 @@
 package com.innobles.bijakmusharib.ui.main.view
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
 import com.innobles.bijakmusharib.R
 import com.innobles.bijakmusharib.databinding.ItemFeedNewsBinding
+import com.innobles.bijakmusharib.databinding.ItemSourcesBinding
 import com.innobles.bijakmusharib.databinding.MainFragmentBinding
 import com.innobles.bijakmusharib.myutils.Status
 import com.innobles.bijakmusharib.myutils.categoryResponse
 import com.innobles.bijakmusharib.networkcall.module.NewsFeedResponse
-import com.innobles.bijakmusharib.networkcall.module.SearchResult
 import com.innobles.bijakmusharib.ui.main.view.adapter.BaseAdapterBinding
+import com.innobles.bijakmusharib.ui.main.view.adapter.PaginationScrollListener
 import com.innobles.bijakmusharib.ui.main.viewModel.MainViewModel
 
 
@@ -27,9 +30,12 @@ class MainFragment : Fragment(), BaseAdapterBinding.BindAdapterListener {
 
     private lateinit var viewModel: MainViewModel
     private lateinit var binding: MainFragmentBinding
+    private var pageNumber = 0
+    private var totalpage = 0
+    private var category = "business"
+    private val isLastPage = false
+    private var isLoading = false
     private lateinit var baseAdapterBinding: BaseAdapterBinding<NewsFeedResponse.Article?>
-    private val searchResultsQueue = ArrayDeque<SearchResult>()
-    private var currentSearchResult: SearchResult? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,84 +53,114 @@ class MainFragment : Fragment(), BaseAdapterBinding.BindAdapterListener {
 
     private fun setUp(){
         viewModel = activity?.let { ViewModelProvider(it).get(MainViewModel::class.java) }!!
+        setUpAdapter()
         setLiveData()
         setCategoryData()
-        onSearching()
     }
+
+   private fun setUpAdapter(){
+       baseAdapterBinding = BaseAdapterBinding(
+           activity?.baseContext!!,
+           arrayListOf(),
+           this,
+           R.layout.item_feed_news
+       )
+        with(binding) {
+            this.recyclerView.adapter = baseAdapterBinding
+            this.recyclerView.addOnScrollListener(object :
+                PaginationScrollListener(this.recyclerView.layoutManager as LinearLayoutManager) {
+                override fun getTotalPageCount(): Int {
+                    return totalpage / 20
+                }
+
+                override fun loadMoreItems() {
+                    isLoading = true
+                    pageNumber += 1
+                    viewModel.fetchArticle(category, pageNumber.toString())
+                }
+
+                override fun isLastPage(): Boolean {
+                    return isLastPage
+                }
+
+                override fun isLoading(): Boolean {
+                    return isLoading
+                }
+            })
+        }
+   }
 
 
     private fun setLiveData() {
-        baseAdapterBinding = BaseAdapterBinding(
-            activity?.baseContext!!,
-            arrayListOf(),
-            this,
-            R.layout.item_feed_news
-        )
-        binding.recyclerView.adapter = baseAdapterBinding
-        viewModel.article.observe(viewLifecycleOwner, {
-            binding.search.clearSearch()
-            when (it.status) {
-
-                Status.LOADING -> {
-                    binding.loading = true
-                }
-                Status.SUCCESS -> {
-                    if (it.data?.articles != null && it.data.articles.isNotEmpty()) {
-                        baseAdapterBinding.setData(it.data.articles)
-                        baseAdapterBinding.notifyDataSetChanged()
-                        binding.error = false
-                    } else {
-                        binding.error = true
-                        binding.message = "No Result found"
+        with(binding){
+            viewModel.article.observe(viewLifecycleOwner, {
+                when (it.status) {
+                    Status.LOADING -> {
+                        this.loading = true
                     }
-                    binding.loading = false
+                    Status.SUCCESS -> {
+                        if (it.data?.articles != null && it.data.articles.isNotEmpty()) {
+                            if (pageNumber == 0) {
+                                baseAdapterBinding.setData(it.data.articles)
+                            }else{
+                                baseAdapterBinding.addAll(it.data.articles)
+                            }
+                            totalpage = it.data.totalResults ?: 0
+                            baseAdapterBinding.notifyDataSetChanged()
+                            this.error = false
+                        } else {
+                            this.error = true
+                            this.message = "No Result found"
+                        }
+                        this.loading = false
+                        isLoading = false
 
+                    }
+                    Status.ERROR -> {
+                        this.loading = false
+                        this.error = true
+                        isLoading = false
+                        this.message = it.message
+                    }
                 }
-                Status.ERROR -> {
-                    binding.loading = false
-                    binding.error = true
-                    binding.message = it.message
-                }
-            }
-        })
-    }
-
-    private fun onSearching() {
-        binding.search.setOnSearchListener {
-            val searchResultFor = "Result for $it"
-            currentSearchResult?.let { c -> searchResultsQueue.add(c) } ?: kotlin.run {
-                this.currentSearchResult = SearchResult(it, searchResultFor)
-            }
-            viewModel.fetchArticle(search = it)
+            })
         }
-
     }
-
 
     @SuppressLint("InflateParams")
     private fun setCategoryData() {
         for (item in categoryResponse.category) {
             val chip: Chip =
                 layoutInflater.inflate(R.layout.item_categorie_tag, null, false) as Chip
-            chip.setOnCheckedChangeListener { _, _ ->
-                item.key?.let { viewModel.fetchArticle(category = it) }
+            with(chip) {
+                this.setOnCheckedChangeListener { _, _ ->
+                    item.key?.let { viewModel.fetchArticle(category = it)
+                        category = it
+                    }
 
+
+                }
+                this.text = item.value
+                binding.chipGroup.addView(this)
             }
-            chip.text = item.value
-            binding.chipGroup.addView(chip)
 
         }
-
     }
 
+    fun moveNext(article: NewsFeedResponse.Article){
+        var intent = Intent(activity,DetailsActivity::class.java)
+        var b= Bundle()
+        b.putParcelable("Article",article)
+        intent.putExtras(b)
+        startActivity(intent)
+    }
 
     override fun onBind(holder: BaseAdapterBinding.DataBindingViewHolder, position: Int) {
-        when (holder.binding) {
-            is ItemFeedNewsBinding -> {
-                holder.binding.item = baseAdapterBinding.getItem(position)
+        with(holder.binding) {
+            if (this is ItemFeedNewsBinding){
+                this.item = baseAdapterBinding.getItem(position)
+                this.frgament = this@MainFragment
             }
-
         }
-
     }
 }

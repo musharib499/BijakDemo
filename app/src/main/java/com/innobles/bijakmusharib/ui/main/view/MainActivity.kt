@@ -19,8 +19,8 @@ class MainActivity : AppCompatActivity() {
         binding.pager.adapter = ViewPagerAdapter(this)
         TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
             tab.text = when (position) {
-                1 -> "US"
-                else -> "India"
+                1 -> "Source"
+                else -> "All News"
             }
         }.attach()
 

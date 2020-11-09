@@ -8,20 +8,21 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:name=".App"
         android:label="@string/name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:usesCleartextTraffic="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppyHireMusharibAl">
-        <activity android:name="com.innobles.bijakmusharib.ui.main.view.MainActivity">
+        android:theme="@style/Theme.AppyHireMusharibAl"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".ui.main.view.DetailsActivity"></activity>
+        <activity android:name=".ui.main.view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 

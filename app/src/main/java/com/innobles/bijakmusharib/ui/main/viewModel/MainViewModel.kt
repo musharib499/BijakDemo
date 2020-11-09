@@ -19,9 +19,9 @@ class MainViewModel @ViewModelInject constructor(private val mainRepository: Mai
      fetchArticle()
  }
 
-      fun fetchArticle(country:String = "in", category:String = "",search:String = "") {
-        val param = hashMapOf<String,String>(COUNTRY_KEY to country, CATEGORY_KEY to category,"q" to search,
-            API_KEY to BuildConfig.SERVER_KEY)
+      fun fetchArticle(category:String = "business", page:String = "0") {
+        val param = hashMapOf<String,String>(CATEGORY_KEY to category,"page" to page ,API_KEY to BuildConfig.SERVER_KEY)
+
         viewModelScope.launch {
             mArticle.postValue(Resource.loading(null))
             if (utils.isNetworkConnected()) {

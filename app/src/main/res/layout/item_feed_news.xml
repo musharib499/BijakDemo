@@ -8,6 +8,9 @@
         <variable
             name="item"
             type="com.innobles.bijakmusharib.networkcall.module.NewsFeedResponse.Article" />
+        <variable
+            name="frgament"
+            type="com.innobles.bijakmusharib.ui.main.view.MainFragment" />
 
     </data>
 
@@ -16,11 +19,13 @@
         android:layout_height="wrap_content"
         app:cardUseCompatPadding="true"
         android:layout_margin="4dp"
+
      >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:onClick="@{()->frgament.moveNext(item)}"
             android:layout_margin="8dp">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -78,6 +83,15 @@
                 app:layout_constraintStart_toStartOf="@+id/tvTitle"
                 app:layout_constraintTop_toBottomOf="@id/tvTitle"
                 tools:text="time" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Body2"
+                app:layout_constraintTop_toBottomOf="@id/tvDescription"
+                app:layout_constraintEnd_toEndOf="@id/tvDescription"
+                android:text="More Details"
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>
