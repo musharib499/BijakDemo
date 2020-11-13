@@ -1,47 +1,32 @@
 package com.innobles.bijakmusharib.ui.main.viewModel
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.switchMap
 import com.innobles.bijakmusharib.BuildConfig
-import com.innobles.bijakmusharib.myutils.*
-import com.innobles.bijakmusharib.networkcall.module.NewsFeedResponse
+import com.innobles.bijakmusharib.myutils.API_KEY
+import com.innobles.bijakmusharib.myutils.Resource
+import com.innobles.bijakmusharib.myutils.Utils
 import com.innobles.bijakmusharib.networkcall.module.SourcesResponse
-import com.innobles.bijakmusharib.networkcall.repository.MainRepository
-import kotlinx.coroutines.launch
+import com.innobles.bijakmusharib.networkcall.repository.MySourceRepository
 
-class SourceViewModel @ViewModelInject constructor(private val mainRepository: MainRepository, private val utils: Utils) : ViewModel(){
+class SourceViewModel @ViewModelInject constructor(
+    private val mySourceRepository: MySourceRepository,
+    private val utils: Utils
+) : ViewModel() {
 
-    private val mArticle = MutableLiveData<Resource<SourcesResponse>>()
-    val article: LiveData<Resource<SourcesResponse>> get() =  mArticle
-
-    init {
-        fetchArticle()
-    }
-
-    fun fetchArticle(country:String = "us", category:String = "",search:String = "") {
-        val param = hashMapOf<String,String>(API_KEY to BuildConfig.SERVER_KEY)
-        viewModelScope.launch {
-            mArticle.postValue(Resource.loading(null))
-            if (utils.isNetworkConnected()) {
-                mainRepository.getArticleSource(param).let {
-                    if (it.isSuccessful) {
-                        if (it.body()?.status == "ok") {
-                            mArticle.postValue(Resource.success(it.body()))
-                        }else{
-                            mArticle.postValue(Resource.error(it.body()?.status?:"", null))
-                        }
-                    } else {
-                        mArticle.postValue(Resource.error(it.errorBody().toString(), null))
-                    }
-
-                }
-            } else
-                mArticle.postValue(Resource.error("No internet connection", null)
-                )
-        }
+    private val param = MutableLiveData<HashMap<String, String>>()
+    val article: LiveData<Resource<List<SourcesResponse.MySource>>> = param.switchMap {
+        mySourceRepository.getMySource(it)
     }
 
 
+    fun fetchArticle() {
+        val p = hashMapOf<String, String>(API_KEY to BuildConfig.SERVER_KEY)
+        param.value = p
+
+    }
 
 }

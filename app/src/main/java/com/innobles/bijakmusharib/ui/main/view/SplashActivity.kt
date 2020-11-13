@@ -1,15 +1,9 @@
 package com.innobles.bijakmusharib.ui.main.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.view.MotionEvent
-import android.view.View
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.innobles.bijakmusharib.R
 import com.innobles.bijakmusharib.databinding.ActivitySplashBinding
@@ -37,8 +31,9 @@ class SplashActivity : AppCompatActivity() {
     fun setUP(){
         runBlocking {
             GlobalScope.launch {
-                var intent = Intent(this@SplashActivity,MainActivity::class.java)
-               startActivity(intent)
+                var intent = Intent(this@SplashActivity, MainActivity::class.java)
+                startActivity(intent)
+                finish()
             }
             delay(1000)
         }

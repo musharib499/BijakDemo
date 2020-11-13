@@ -1,13 +1,19 @@
 package com.innobles.bijakmusharib.dataInjection
 
+import android.content.Context
 import com.innobles.bijakmusharib.BuildConfig
-import com.innobles.bijakmusharib.networkcall.api.ApiHelper
 import com.innobles.bijakmusharib.networkcall.api.ApiHelperImpl
 import com.innobles.bijakmusharib.networkcall.api.ApiService
+import com.innobles.bijakmusharib.networkcall.dao.AppDatabase
+import com.innobles.bijakmusharib.networkcall.dao.ArticleDao
+import com.innobles.bijakmusharib.networkcall.dao.MySourceDao
+import com.innobles.bijakmusharib.networkcall.repository.MainRepository
+import com.innobles.bijakmusharib.networkcall.repository.MySourceRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -53,7 +59,36 @@ class ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideApiHelper(helper: ApiHelperImpl): ApiHelper = helper
+    fun provideApiHelper(helper: ApiService) = ApiHelperImpl(helper)
 
+    @Singleton
+    @Provides
+    fun provideDatabase(@ApplicationContext appContext: Context) =
+        AppDatabase.getDatabase(appContext)
+
+    @Singleton
+    @Provides
+    fun provideArticleDao(db: AppDatabase) = db.articleDao()
+
+    @Singleton
+    @Provides
+    fun provideMySourceDao(db: AppDatabase) = db.mySourceDao()
+
+    @Singleton
+    @Provides
+    fun provideRepository(
+        helper: ApiHelperImpl,
+        articleDao: ArticleDao
+    ) =
+        MainRepository(helper, articleDao)
+
+
+    @Singleton
+    @Provides
+    fun provideSourceRepository(
+        helper: ApiHelperImpl,
+        mySourceDao: MySourceDao
+    ) =
+        MySourceRepository(helper, mySourceDao)
 
 }

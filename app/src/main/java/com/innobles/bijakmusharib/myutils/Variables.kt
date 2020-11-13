@@ -10,6 +10,7 @@ import com.innobles.bijakmusharib.networkcall.module.NewsFeedResponse
  * musharib.ali@innobles.com
  */
 const val CATEGORY_KEY = "category"
+const val PAGE = "page"
 const val API_KEY = "apiKey"
 
 val categoryResponse: CategoryResponse = Gson().fromJson(

@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.innobles.bijakmusharib.networkcall.module.NewsFeedResponse.Article" />
+            type="com.innobles.bijakmusharib.networkcall.module.Article" />
         <variable
             name="frgament"
             type="com.innobles.bijakmusharib.ui.main.view.MainFragment" />
@@ -36,7 +36,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="@{item.source.name}"
+                android:text="@{item.title}"
                 tools:text="Title" />
 
             <androidx.appcompat.widget.AppCompatTextView

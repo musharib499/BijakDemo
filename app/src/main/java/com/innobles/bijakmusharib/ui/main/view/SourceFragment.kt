@@ -10,7 +10,6 @@ import com.innobles.bijakmusharib.R
 import com.innobles.bijakmusharib.databinding.ItemSourcesBinding
 import com.innobles.bijakmusharib.databinding.MainSourceFragmentBinding
 import com.innobles.bijakmusharib.myutils.Status
-import com.innobles.bijakmusharib.networkcall.module.SearchResult
 import com.innobles.bijakmusharib.networkcall.module.SourcesResponse
 import com.innobles.bijakmusharib.ui.main.view.adapter.BaseAdapterBinding
 import com.innobles.bijakmusharib.ui.main.viewModel.SourceViewModel
@@ -24,7 +23,7 @@ class SourceFragment : Fragment(), BaseAdapterBinding.BindAdapterListener {
 
     private lateinit var viewModel: SourceViewModel
     private lateinit var binding: MainSourceFragmentBinding
-    private lateinit var baseAdapterBinding: BaseAdapterBinding<SourcesResponse.Source?>
+    private lateinit var baseAdapterBinding: BaseAdapterBinding<SourcesResponse.MySource?>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +36,7 @@ class SourceFragment : Fragment(), BaseAdapterBinding.BindAdapterListener {
 
     private fun setUp(){
         viewModel = activity?.let { ViewModelProvider(it).get(SourceViewModel::class.java) }!!
+        viewModel.fetchArticle()
         setLiveData()
     }
 
@@ -56,14 +56,10 @@ class SourceFragment : Fragment(), BaseAdapterBinding.BindAdapterListener {
                        this.loading = true
                    }
                    Status.SUCCESS -> {
-                       if (it.data?.sources != null && it.data.sources.isNotEmpty()) {
-                           baseAdapterBinding.setData(it.data.sources)
-                           baseAdapterBinding.notifyDataSetChanged()
-                           this.error = false
-                       } else {
-                           this.error = true
-                           this.message = "No Result found"
-                       }
+                       baseAdapterBinding.setData(it.data)
+                       baseAdapterBinding.notifyDataSetChanged()
+                       this.error = false
+
                        this.loading = false
 
                    }

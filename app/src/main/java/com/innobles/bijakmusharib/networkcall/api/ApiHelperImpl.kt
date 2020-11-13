@@ -1,8 +1,5 @@
 package com.innobles.bijakmusharib.networkcall.api
 
-import com.innobles.bijakmusharib.networkcall.module.NewsFeedResponse
-import com.innobles.bijakmusharib.networkcall.module.SourcesResponse
-import retrofit2.Response
 import javax.inject.Inject
 
 /**
@@ -10,11 +7,13 @@ import javax.inject.Inject
  * I.S.T Pvt. Ltd
  * musharib.ali@innobles.com
  */
-class ApiHelperImpl @Inject constructor(private val apiService: ApiService) : ApiHelper {
-    override suspend fun getArticle(param: HashMap<String, String>): Response<NewsFeedResponse> =
+class ApiHelperImpl @Inject constructor(private val apiService: ApiService) : BaseDataSource() {
+    suspend fun getArticle(param: HashMap<String, String>) = getResult {
         apiService.getArticle(param)
+    }
 
-    override suspend fun getArticleSource(param: HashMap<String, String>): Response<SourcesResponse> =
+    suspend fun getArticleSource(param: HashMap<String, String>) = getResult {
         apiService.getArticleSource(param)
+    }
 
 }

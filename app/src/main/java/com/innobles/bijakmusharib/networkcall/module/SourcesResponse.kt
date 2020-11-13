@@ -1,15 +1,19 @@
 package com.innobles.bijakmusharib.networkcall.module
 
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-
 data class SourcesResponse(
     @SerializedName("sources")
-    var sources: List<Source?>,
+    var sources: List<MySource?>,
     @SerializedName("status")
     var status: String? // ok
 ) {
-    data class Source(
+    @Entity
+    data class MySource(
+        @PrimaryKey(autoGenerate = true)
+        var mID: Int = 0,
         @SerializedName("category")
         var category: String?, // general
         @SerializedName("country")

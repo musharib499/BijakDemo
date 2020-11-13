@@ -1,8 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.google.dagger:hilt-android:2.28-alpha@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/b36e2285a6e762e7fffa9e3008e786c5/jetified-hilt-android-2.28-alpha/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/b36e2285a6e762e7fffa9e3008e786c5/jetified-hilt-android-2.28-alpha/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/aba5c10d579f1e03e050110deb34935e/jetified-hilt-android-2.28-alpha/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/b36e2285a6e762e7fffa9e3008e786c5/jetified-hilt-android-2.28-alpha/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/b36e2285a6e762e7fffa9e3008e786c5/jetified-hilt-android-2.28-alpha/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
