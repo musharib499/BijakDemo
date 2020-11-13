@@ -40,6 +40,8 @@ class MainRepository @Inject constructor(
 
     )
 
+    fun getDetails(id: Int) = articleDao.getArticle(id)
+
     suspend fun setArticle(article: Article) = articleDao.setArticle(article)
     suspend fun setAllArticle(articleList: List<Article>) =
         articleDao.setAllArticle(articleList)

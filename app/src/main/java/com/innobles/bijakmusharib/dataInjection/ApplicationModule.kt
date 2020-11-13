@@ -83,6 +83,7 @@ class ApplicationModule {
         MainRepository(helper, articleDao)
 
 
+
     @Singleton
     @Provides
     fun provideSourceRepository(
@@ -90,5 +91,6 @@ class ApplicationModule {
         mySourceDao: MySourceDao
     ) =
         MySourceRepository(helper, mySourceDao)
+
 
 }

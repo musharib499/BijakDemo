@@ -1,6 +1,7 @@
 package com.innobles.bijakmusharib.ui.main.view
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -148,11 +149,11 @@ class MainFragment : Fragment(), BaseAdapterBinding.BindAdapterListener {
     }
 
     fun moveNext(article: Article) {
-//        var intent = Intent(activity,DetailsActivity::class.java)
-//        var b= Bundle()
-//        b.putParcelable("Article",article)
-//        intent.putExtras(b)
-//        startActivity(intent)
+        var intent = Intent(activity, DetailsActivity::class.java)
+        var b = Bundle()
+        b.putParcelable("Article", article)
+        intent.putExtras(b)
+        startActivity(intent)
     }
 
     override fun onBind(holder: BaseAdapterBinding.DataBindingViewHolder, position: Int) {

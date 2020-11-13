@@ -1,11 +1,13 @@
 package com.innobles.bijakmusharib.networkcall.module
 
 
+import android.os.Parcelable
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 @Entity
 data class NewsFeedResponse(
@@ -19,6 +21,7 @@ data class NewsFeedResponse(
     var message: String?,
 )
 
+@Parcelize
 @Entity(indices = [Index(value = ["publishedAt"], unique = true)])
 data class Article(
     @PrimaryKey(autoGenerate = true)
@@ -47,8 +50,9 @@ data class Article(
     var url: String?, // https://www.bbc.com/news/entertainment-arts-54761824
     @SerializedName("urlToImage")
     var urlToImage: String? // https://ichef.bbci.co.uk/news/1024/branded_news/16A2B/production/_115151729_seancreuters.jpg
-)
+) : Parcelable
 
+@Parcelize
 @Entity
 data class Source(
     @PrimaryKey(autoGenerate = true)
@@ -57,4 +61,4 @@ data class Source(
     var id: String?, // null
     @SerializedName("name")
     var name: String?  // BBC News
-)
+) : Parcelable

@@ -6,18 +6,29 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 import com.innobles.bijakmusharib.BuildConfig
-import com.innobles.bijakmusharib.myutils.*
+import com.innobles.bijakmusharib.myutils.API_KEY
+import com.innobles.bijakmusharib.myutils.CATEGORY_KEY
+import com.innobles.bijakmusharib.myutils.PAGE
+import com.innobles.bijakmusharib.myutils.Resource
 import com.innobles.bijakmusharib.networkcall.module.Article
 import com.innobles.bijakmusharib.networkcall.repository.MainRepository
 
-class MainViewModel @ViewModelInject constructor(
-    private val mainRepository: MainRepository,
-    private val utils: Utils
-) : ViewModel() {
+class MainViewModel @ViewModelInject constructor(private val mainRepository: MainRepository) :
+    ViewModel() {
 
     private val param = MutableLiveData<HashMap<String, String>>()
+    private val _id = MutableLiveData<Int>()
     val article: LiveData<Resource<List<Article>>> = param.switchMap {
         mainRepository.getArticle(it)
+    }
+
+    val articleSingle: LiveData<Article> = _id.switchMap {
+        mainRepository.getDetails(it)
+
+    }
+
+    fun setId(id: Int) {
+        _id.value = id
     }
 
 
