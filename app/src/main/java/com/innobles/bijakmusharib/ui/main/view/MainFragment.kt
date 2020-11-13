@@ -56,7 +56,7 @@ class MainFragment : Fragment(), BaseAdapterBinding.BindAdapterListener {
         setUpAdapter()
         setLiveData()
         setCategoryData()
-        viewModel.fetchArticle(category = "busi", page = pageNumber.toString())
+        viewModel.fetchArticle()
 
     }
 
