@@ -99,8 +99,6 @@ class MainFragment : Fragment(), BaseAdapterBinding.BindAdapterListener {
             viewModel.article.observe(viewLifecycleOwner, {
                 when (it.status) {
                     Status.SUCCESS -> {
-                        this.loading = false
-                        isLoading = false
                         if (!it.data.isNullOrEmpty()) {
                             if (pageNumber == 0) {
                                 baseAdapterBinding.setData(it.data)
@@ -110,6 +108,9 @@ class MainFragment : Fragment(), BaseAdapterBinding.BindAdapterListener {
                             }
 
                         }
+                        this.loading = false
+                        isLoading = false
+
                     }
                     Status.ERROR -> {
                         if ((baseAdapterBinding.list.isNullOrEmpty() && baseAdapterBinding.list?.size ?: 0 > 0)) {
